@@ -1,0 +1,822 @@
+quot
+scrape
+quot	scrape
+login
+scrape	login
+quot	scrape	login
+login
+login	login
+scrape	login	login
+albert
+login	albert
+login	login	albert
+einstein
+albert	einstein
+login	albert	einstein
+born
+einstein	born
+albert	einstein	born
+march
+born	march
+einstein	born	march
+ulm
+march	ulm
+born	march	ulm
+germani
+ulm	germani
+march	ulm	germani
+descript
+germani	descript
+ulm	germani	descript
+albert
+descript	albert
+germani	descript	albert
+einstein
+albert	einstein
+descript	albert	einstein
+born
+einstein	born
+albert	einstein	born
+ulm
+born	ulm
+einstein	born	ulm
+germani
+ulm	germani
+born	ulm	germani
+complet
+germani	complet
+ulm	germani	complet
+univers
+complet	univers
+germani	complet	univers
+zurich
+univers	zurich
+complet	univers	zurich
+paper
+zurich	paper
+univers	zurich	paper
+explain
+paper	explain
+zurich	paper	explain
+photoelectr
+explain	photoelectr
+paper	explain	photoelectr
+basi
+photoelectr	basi
+explain	photoelectr	basi
+electron
+basi	electron
+photoelectr	basi	electron
+earn
+electron	earn
+basi	electron	earn
+nobel
+earn	nobel
+electron	earn	nobel
+prize
+nobel	prize
+earn	nobel	prize
+paper
+prize	paper
+nobel	prize	paper
+special
+paper	special
+prize	paper	special
+rel
+special	rel
+paper	special	rel
+theori
+rel	theori
+special	rel	theori
+publish
+theori	publish
+rel	theori	publish
+chang
+publish	chang
+theori	publish	chang
+rise
+chang	rise
+publish	chang	rise
+nazi
+rise	nazi
+chang	rise	nazi
+parti
+nazi	parti
+rise	nazi	parti
+einstein
+parti	einstein
+nazi	parti	einstein
+princeton
+einstein	princeton
+parti	einstein	princeton
+perman
+princeton	perman
+einstein	princeton	perman
+citizen
+perman	citizen
+princeton	perman	citizen
+einstein
+citizen	einstein
+perman	citizen	einstein
+pacifist
+einstein	pacifist
+citizen	einstein	pacifist
+war
+pacifist	war
+einstein	pacifist	war
+stai
+war	stai
+pacifist	war	stai
+firm
+stai	firm
+war	stai	firm
+propon
+firm	propon
+stai	firm	propon
+social
+propon	social
+firm	propon	social
+justic
+social	justic
+propon	social	justic
+respons
+justic	respons
+social	justic	respons
+chair
+respons	chair
+justic	respons	chair
+emerg
+chair	emerg
+respons	chair	emerg
+committe
+emerg	committe
+chair	emerg	committe
+atom
+committe	atom
+emerg	committe	atom
+scientist
+atom	scientist
+committe	atom	scientist
+organ
+scientist	organ
+atom	scientist	organ
+alert
+organ	alert
+scientist	organ	alert
+public
+alert	public
+organ	alert	public
+danger
+public	danger
+alert	public	danger
+atom
+danger	atom
+public	danger	atom
+warfar
+atom	warfar
+danger	atom	warfar
+symposium
+warfar	symposium
+atom	warfar	symposium
+advis
+symposium	advis
+warfar	symposium	advis
+struggl
+advis	struggl
+symposium	advis	struggl
+ethic
+struggl	ethic
+advis	struggl	ethic
+teacher
+ethic	teacher
+struggl	ethic	teacher
+religion
+teacher	religion
+ethic	teacher	religion
+statur
+religion	statur
+teacher	religion	statur
+doctrin
+statur	doctrin
+religion	statur	doctrin
+person
+doctrin	person
+statur	doctrin	person
+god
+person	god
+doctrin	person	god
+sourc
+god	sourc
+person	god	sourc
+fear
+sourc	fear
+god	sourc	fear
+hope
+fear	hope
+sourc	fear	hope
+vast
+hope	vast
+fear	hope	vast
+power
+vast	power
+hope	vast	power
+hand
+power	hand
+vast	power	hand
+priest
+hand	priest
+power	hand	priest
+labor
+priest	labor
+hand	priest	labor
+avail
+labor	avail
+priest	labor	avail
+forc
+avail	forc
+labor	avail	forc
+capabl
+forc	capabl
+avail	forc	capabl
+cultiv
+capabl	cultiv
+forc	capabl	cultiv
+true
+cultiv	true
+capabl	cultiv	true
+beauti
+true	beauti
+cultiv	true	beauti
+human
+beauti	human
+true	beauti	human
+difficult
+human	difficult
+beauti	human	difficult
+incompar
+difficult	incompar
+human	difficult	incompar
+worthi
+incompar	worthi
+difficult	incompar	worthi
+task
+worthi	task
+incompar	worthi	task
+scienc
+task	scienc
+worthi	task	scienc
+philosophi
+scienc	philosophi
+task	scienc	philosophi
+religion
+philosophi	religion
+scienc	philosophi	religion
+symposium
+religion	symposium
+philosophi	religion	symposium
+publish
+symposium	publish
+religion	symposium	publish
+confer
+publish	confer
+symposium	publish	confer
+scienc
+confer	scienc
+publish	confer	scienc
+philosophi
+scienc	philosophi
+confer	scienc	philosophi
+religion
+philosophi	religion
+scienc	philosophi	religion
+relat
+religion	relat
+philosophi	religion	relat
+democrat
+relat	democrat
+religion	relat	democrat
+life
+democrat	life
+relat	democrat	life
+york
+life	york
+democrat	life	york
+letter
+york	letter
+life	york	letter
+philosoph
+letter	philosoph
+york	letter	philosoph
+eric
+philosoph	eric
+letter	philosoph	eric
+gutkind
+eric	gutkind
+philosoph	eric	gutkind
+date
+gutkind	date
+eric	gutkind	date
+jan
+date	jan
+gutkind	date	jan
+einstein
+jan	einstein
+date	jan	einstein
+state
+einstein	state
+jan	einstein	state
+word
+state	word
+einstein	state	word
+god
+word	god
+state	word	god
+express
+god	express
+word	god	express
+product
+express	product
+god	express	product
+human
+product	human
+express	product	human
+weak
+human	weak
+product	human	weak
+bibl
+weak	bibl
+human	weak	bibl
+collect
+bibl	collect
+weak	bibl	collect
+honor
+collect	honor
+bibl	collect	honor
+primit
+honor	primit
+collect	honor	primit
+legend
+primit	legend
+honor	primit	legend
+pretti
+legend	pretti
+primit	legend	pretti
+childish
+pretti	childish
+legend	pretti	childish
+interpret
+childish	interpret
+pretti	childish	interpret
+matter
+interpret	matter
+childish	interpret	matter
+subtl
+matter	subtl
+interpret	matter	subtl
+chang
+subtl	chang
+matter	subtl	chang
+guardian
+chang	guardian
+subtl	chang	guardian
+childish
+guardian	childish
+chang	guardian	childish
+superstit
+childish	superstit
+guardian	childish	superstit
+einstein
+superstit	einstein
+childish	superstit	einstein
+letter
+einstein	letter
+superstit	einstein	letter
+view
+letter	view
+einstein	letter	view
+religion
+view	religion
+letter	view	religion
+jame
+religion	jame
+view	religion	jame
+randerson
+jame	randerson
+religion	jame	randerson
+mass
+randerson	mass
+jame	randerson	mass
+energi
+mass	energi
+randerson	mass	energi
+equival
+energi	equival
+mass	energi	equival
+formula
+equival	formula
+energi	equival	formula
+dub
+formula	dub
+equival	formula	dub
+famou
+dub	famou
+formula	dub	famou
+equat
+famou	equat
+dub	famou	equat
+receiv
+equat	receiv
+famou	equat	receiv
+nobel
+receiv	nobel
+equat	receiv	nobel
+prize
+nobel	prize
+receiv	nobel	prize
+physic
+prize	physic
+nobel	prize	physic
+servic
+physic	servic
+prize	physic	servic
+theoret
+servic	theoret
+physic	servic	theoret
+physic
+theoret	physic
+servic	theoret	physic
+discoveri
+physic	discoveri
+theoret	physic	discoveri
+law
+discoveri	law
+physic	discoveri	law
+photoelectr
+law	photoelectr
+discoveri	law	photoelectr
+pivot
+photoelectr	pivot
+law	photoelectr	pivot
+establish
+pivot	establish
+photoelectr	pivot	establish
+quantum
+establish	quantum
+pivot	establish	quantum
+theori
+quantum	theori
+establish	quantum	theori
+einstein
+theori	einstein
+quantum	theori	einstein
+newtonion
+einstein	newtonion
+theori	einstein	newtonion
+mechan
+newtonion	mechan
+einstein	newtonion	mechan
+reconcil
+mechan	reconcil
+newtonion	mechan	reconcil
+law
+reconcil	law
+mechan	reconcil	law
+classic
+law	classic
+reconcil	law	classic
+mechan
+classic	mechan
+law	classic	mechan
+law
+mechan	law
+classic	mechan	law
+electromagnet
+law	electromagnet
+mechan	law	electromagnet
+field
+electromagnet	field
+law	electromagnet	field
+led
+field	led
+electromagnet	field	led
+develop
+led	develop
+field	led	develop
+special
+develop	special
+led	develop	special
+theori
+special	theori
+develop	special	theori
+rel
+theori	rel
+special	theori	rel
+realiz
+rel	realiz
+theori	rel	realiz
+principl
+realiz	principl
+rel	realiz	principl
+rel
+principl	rel
+realiz	principl	rel
+extend
+rel	extend
+principl	rel	extend
+gravit
+extend	gravit
+rel	extend	gravit
+field
+gravit	field
+extend	gravit	field
+subsequ
+field	subsequ
+gravit	field	subsequ
+theori
+subsequ	theori
+field	subsequ	theori
+gravit
+theori	gravit
+subsequ	theori	gravit
+publish
+gravit	publish
+theori	gravit	publish
+paper
+publish	paper
+gravit	publish	paper
+theori
+paper	theori
+publish	paper	theori
+rel
+theori	rel
+paper	theori	rel
+continu
+rel	continu
+theori	rel	continu
+deal
+continu	deal
+rel	continu	deal
+statist
+deal	statist
+continu	deal	statist
+mechan
+statist	mechan
+deal	statist	mechan
+quantum
+mechan	quantum
+statist	mechan	quantum
+theori
+quantum	theori
+mechan	quantum	theori
+led
+theori	led
+quantum	theori	led
+explan
+led	explan
+theori	led	explan
+particl
+explan	particl
+led	explan	particl
+theori
+particl	theori
+explan	particl	theori
+motion
+theori	motion
+particl	theori	motion
+molecul
+motion	molecul
+theori	motion	molecul
+investig
+molecul	investig
+motion	molecul	investig
+thermal
+investig	thermal
+molecul	investig	thermal
+properti
+thermal	properti
+investig	thermal	properti
+light
+properti	light
+thermal	properti	light
+laid
+light	laid
+properti	light	laid
+foundat
+laid	foundat
+light	laid	foundat
+photon
+foundat	photon
+laid	foundat	photon
+theori
+photon	theori
+foundat	photon	theori
+light
+theori	light
+photon	theori	light
+visit
+light	visit
+theori	light	visit
+unit
+visit	unit
+light	visit	unit
+adolf
+unit	adolf
+visit	unit	adolf
+hitler
+adolf	hitler
+unit	adolf	hitler
+power
+hitler	power
+adolf	hitler	power
+germani
+power	germani
+hitler	power	germani
+ev
+germani	ev
+power	germani	ev
+war
+ev	war
+germani	ev	war
+endors
+war	endors
+ev	war	endors
+letter
+endors	letter
+war	endors	letter
+presid
+letter	presid
+endors	letter	presid
+franklin
+presid	franklin
+letter	presid	franklin
+roosevelt
+franklin	roosevelt
+presid	franklin	roosevelt
+alert
+roosevelt	alert
+franklin	roosevelt	alert
+potenti
+alert	potenti
+roosevelt	alert	potenti
+develop
+potenti	develop
+alert	potenti	develop
+extrem
+develop	extrem
+potenti	develop	extrem
+power
+extrem	power
+develop	extrem	power
+bomb
+power	bomb
+extrem	power	bomb
+type
+bomb	type
+power	bomb	type
+recommend
+type	recommend
+bomb	type	recommend
+eventu
+recommend	eventu
+type	recommend	eventu
+led
+eventu	led
+recommend	eventu	led
+manhattan
+led	manhattan
+eventu	led	manhattan
+project
+manhattan	project
+led	manhattan	project
+einstein
+project	einstein
+manhattan	project	einstein
+support
+einstein	support
+project	einstein	support
+defend
+support	defend
+einstein	support	defend
+alli
+defend	alli
+support	defend	alli
+forc
+alli	forc
+defend	alli	forc
+denounc
+forc	denounc
+alli	forc	denounc
+newli
+denounc	newli
+forc	denounc	newli
+discov
+newli	discov
+denounc	newli	discov
+nuclear
+discov	nuclear
+newli	discov	nuclear
+fission
+nuclear	fission
+discov	nuclear	fission
+weapon
+fission	weapon
+nuclear	fission	weapon
+bertrand
+weapon	bertrand
+fission	weapon	bertrand
+russel
+bertrand	russel
+weapon	bertrand	russel
+einstein
+russel	einstein
+bertrand	russel	einstein
+sign
+einstein	sign
+russel	einstein	sign
+russel
+sign	russel
+einstein	sign	russel
+einstein
+russel	einstein
+sign	russel	einstein
+manifesto
+einstein	manifesto
+russel	einstein	manifesto
+highlight
+manifesto	highlight
+einstein	manifesto	highlight
+danger
+highlight	danger
+manifesto	highlight	danger
+nuclear
+danger	nuclear
+highlight	danger	nuclear
+weapon
+nuclear	weapon
+danger	nuclear	weapon
+einstein
+weapon	einstein
+nuclear	weapon	einstein
+affili
+einstein	affili
+weapon	einstein	affili
+institut
+affili	institut
+einstein	affili	institut
+advanc
+institut	advanc
+affili	institut	advanc
+studi
+advanc	studi
+institut	advanc	studi
+princeton
+studi	princeton
+advanc	studi	princeton
+jersei
+princeton	jersei
+studi	princeton	jersei
+death
+jersei	death
+princeton	jersei	death
+intellectu
+death	intellectu
+jersei	death	intellectu
+achiev
+intellectu	achiev
+death	intellectu	achiev
+origin
+achiev	origin
+intellectu	achiev	origin
+word
+origin	word
+achiev	origin	word
+einstein
+word	einstein
+origin	word	einstein
+synonym
+einstein	synonym
+word	einstein	synonym
+geniu
+synonym	geniu
+einstein	synonym	geniu
+en
+geniu	en
+synonym	geniu	en
+wikipedia
+en	wikipedia
+geniu	en	wikipedia
+wiki
+wikipedia	wiki
+en	wikipedia	wiki
+albert
+wiki	albert
+wikipedia	wiki	albert
+nobelpr
+albert	nobelpr
+wiki	albert	nobelpr
+nobel
+nobelpr	nobel
+albert	nobelpr	nobel
+prize
+nobel	prize
+nobelpr	nobel	prize
