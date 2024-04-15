@@ -6,7 +6,10 @@ Right now, ingests the txt file `less-links.txt`, distributes these links to the
 
 Crawl phase is a simple axios get request on the link, which then returns the text content of the book.
 
-
+To bypass SSL certificate validation
+```
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+```
 
 TODO: 
 
