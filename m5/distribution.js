@@ -65,6 +65,8 @@ distribution['all'].store =
 
 module.exports = global.distribution;
 
+global.axios = require('axios');
+
 /* The following code is run when distribution.js is run directly */
 if (require.main === module) {
   distribution.node.start(global.nodeConfig.onStart);

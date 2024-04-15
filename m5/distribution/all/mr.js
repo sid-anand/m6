@@ -7,15 +7,17 @@ const mr = function(config) {
   return {
     exec: (configuration, callback) => {
       const mrService = {
-        map: (keys, mapper, gid, cb) => {
+        map: async (keys, mapper, gid, cb) => {
+          console.log("keys", keys);
           let ctr = 0;
           const mappedResults = {};
           for (const key of keys) {
             global.distribution.local.store.get({key: key, gid: gid},
-                (e, value) => {
+                async (e, value) => {
                   if (!e) {
                     // if key is found on the node (often might not be)
-                    let mapped = mapper(key, value);
+                    let mapped = await mapper(key, value);
+                    console.log("mapped result", mapped);
                     if (!(mapped instanceof Array)) {
                       mapped = [mapped];
                     }

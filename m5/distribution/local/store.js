@@ -70,7 +70,7 @@ store.put = (obj, name, cb) => {
     if (name.key === null) {
       name.key = id.getID(obj);
     }
-    name.key = name.key.replace(/[^a-zA-Z0-9,]/g, '');
+    name.key = name.key.replace(/[^a-zA-Z0-9,:_.?]/g, '');
     if (!fs.existsSync(path.join(__dirname, `../../store/${nid}`))) {
       fs.mkdirSync(path.join(__dirname, `../../store/${nid}`));
     }
@@ -88,7 +88,7 @@ store.put = (obj, name, cb) => {
       }
     });
   } else {
-    name = name.replace(/[^a-zA-Z0-9,]/g, '');
+    name = name.replace(/[^a-zA-Z0-9,:_.?]/g, '');
     if (!fs.existsSync(path.join(__dirname, `../../store/${nid}`))) {
       fs.mkdirSync(path.join(__dirname, `../../store/${nid}`));
     }
@@ -115,7 +115,7 @@ store.append = (obj, name, cb) => {
     if (name.key === null) {
       name.key = id.getID(obj);
     }
-    name.key = name.key.replace(/[^a-zA-Z0-9,]/g, '');
+    name.key = name.key.replace(/[^a-zA-Z0-9,:_.?]/g, '');
     if (!fs.existsSync(path.join(__dirname, `../../store/${nid}`))) {
       fs.mkdirSync(path.join(__dirname, `../../store/${nid}`));
     }
@@ -142,7 +142,7 @@ store.append = (obj, name, cb) => {
         `../../store/${nid}/${name.gid}/${name.key}`), serializedDataObj);
     cb(null, obj);
   } else {
-    name = name.replace(/[^a-zA-Z0-9,]/g, '');
+    name = name.replace(/[^a-zA-Z0-9,:_.?]/g, '');
     if (!fs.existsSync(path.join(__dirname, `../../store/${nid}`))) {
       fs.mkdirSync(path.join(__dirname, `../../store/${nid}`));
     }
