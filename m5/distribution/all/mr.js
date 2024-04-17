@@ -8,7 +8,7 @@ const mr = function(config) {
     exec: (configuration, callback) => {
       const mrService = {
         map: async (keys, mapper, gid, cb) => {
-          console.log("keys", keys);
+          // console.log("keys", keys);
           let ctr = 0;
           const mappedResults = {};
           for (const key of keys) {
@@ -17,7 +17,7 @@ const mr = function(config) {
                   if (!e) {
                     // if key is found on the node (often might not be)
                     let mapped = await mapper(key, value);
-                    console.log("mapped result", mapped);
+                    // console.log("mapped result", mapped);
                     if (!(mapped instanceof Array)) {
                       mapped = [mapped];
                     }
@@ -32,6 +32,7 @@ const mr = function(config) {
                   }
                   ctr++;
                   if (ctr === keys.length) {
+                    // console.log("got to ctrl === keys.length")
                     global.distribution.local.store.put(mappedResults,
                         {key: 'mappedResults', gid: gid}, (e, v) => {
                           // notify the coordinator
@@ -50,7 +51,7 @@ const mr = function(config) {
         },
         shuffle: (compactor, gid, cb) => {
           // get and delete `mappedResults` file
-          global.distribution.local.store.del({key: 'mappedResults', gid: gid},
+          global.distribution.local.store.get({key: 'mappedResults', gid: gid},
               (e, mappedResults) => {
                 let ctr = 0;
                 for (const key of Object.keys(mappedResults)) {

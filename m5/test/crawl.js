@@ -142,6 +142,7 @@ do_initialize(() => {
                    return out;
                 };
 
+                // dummy reduce function that does nothing. 
                 const reduceFn = (key, values) => {
                     let out = {};
                     out[key] = values;
@@ -150,10 +151,94 @@ do_initialize(() => {
 
                 distribution.ncdc.mr.exec({keys: keys, map: mapFn, reduce: reduceFn}, (e, v) => {
                     console.log("Done with map-reduce");
-                    console.log("Results: ", v);
-                    teardown(() => {
-                        console.log('done');
-                    });             
+                    // console.log("Results: ", v);
+
+                    let numBooksFetched = v.length; 
+
+                    console.log("Number of books fetched: ", numBooksFetched);
+
+
+
+                    let count = 0; 
+                    for (let nodeResults of v) {
+                        // console.log("Node Results: ", nodeResults);
+                        for (let key in nodeResults) {
+                            let txtBookContent = nodeResults[key][0];
+
+                            // send the txt content to the group. 
+
+                            distribution.ncdc.store.put(txtBookContent, key, (e, v) => {
+                              count++;
+                              if (e) {
+                                console.log("Error storing txt content: ", e);
+                              } else {
+                                if (count == numBooksFetched) {
+                                  // finished storing the txt content for all books on the nodes. 
+                                  console.log("Done storing txt content for all books")
+                                  // now we can proceed to indexing. 
+
+
+                                  const mapFnForIndexer = (key, value) => {
+                                    // key: "https:__atlas?cs?brown?edu_data_gutenberg_0_7_old_7?txt"
+                                    // value: text content for a book. 
+                                    
+                                    value = value.toLowerCase();
+                                    value = value.replace(/[^a-zA-Z0-9]/g, ' ');
+                                    value = value.replace(/\s{2,}/g, ' ');
+                                    let words = value.split(/(\s+)/).filter((e) => e !== ' ' && e !== '');
+                                    
+                                    // console.log("Words: ", words);
+
+
+                                    let NGRAMSIZE = 4; 
+                                    let out = []; 
+              
+                                    for (let ngram = 1; ngram <= NGRAMSIZE; ngram++) {
+                                      ngram = NGRAMSIZE;
+                                      for (let i = 0; i < words.length - ngram; i++) {
+                                        let ngramKey = words.slice(i, i + ngram);
+                                        let o = {};
+
+                                        let strNGram = ngramKey.join(' ');
+                                        // o[key] = ngramKey.join(' ');
+                                        out[strNGram] = key; 
+
+                                        out.push(o);
+                                      }
+                                    }
+                                    return out; 
+                                  }
+
+
+                                  distribution.ncdc.mr.exec({keys: keys, map: mapFnForIndexer, reduce: reduceFn}, (e, v) => {
+                      
+                                    console.log("Done with indexing");
+              
+                                    console.log("Indexing Results: ", v);
+                                    // v is inverted index: ngrams --> [list of URLs]
+                                    
+                                    // store the inverted index in the store. 
+
+                                    // in query, it's distributed grep. 
+
+              
+                                    teardown(() => {
+                                      console.log('done');
+                                    });     
+                                  });     
+
+                               
+                                } 
+                              }
+                            });
+                            
+                        }
+                    }
+
+
+                    
+
+                       
                 });
             }
         });
