@@ -51,7 +51,7 @@ const mr = function(config) {
         },
         shuffle: (compactor, gid, cb) => {
           // get and delete `mappedResults` file
-          global.distribution.local.store.get({key: 'mappedResults', gid: gid},
+          global.distribution.local.store.del({key: 'mappedResults', gid: gid},
               (e, mappedResults) => {
                 let ctr = 0;
                 for (const key of Object.keys(mappedResults)) {
