@@ -15,26 +15,36 @@ const mr = function(config) {
                 (e, value) => {
                   if (!e) {
                     // if key is found on the node (often might not be)
-                    let mapped = mapper(key, value);
-                    if (!(mapped instanceof Array)) {
-                      mapped = [mapped];
-                    }
-                    for (const mappedPair of mapped) {
-                      const intKey = Object.keys(mappedPair)[0];
-                      const intValue = mappedPair[intKey];
-                      if (!mappedResults[intKey]) {
-                        mappedResults[intKey] = [];
+                    Promise.resolve(mapper(key, value)).then((mapped) => {
+                      if (!(mapped instanceof Array)) {
+                        mapped = [mapped];
                       }
-                      mappedResults[intKey].push(intValue);
+                      for (const mappedPair of mapped) {
+                        const intKey = Object.keys(mappedPair)[0];
+                        const intValue = mappedPair[intKey];
+                        if (!mappedResults[intKey]) {
+                          mappedResults[intKey] = [];
+                        }
+                        mappedResults[intKey].push(intValue);
+                      }
+                      ctr++;
+                      if (ctr === keys.length) {
+                        global.distribution.local.store.put(mappedResults,
+                            {key: 'mappedResults', gid: gid}, (e, v) => {
+                              // notify the coordinator
+                              cb(null, null);
+                            });
+                      }
+                    });
+                  } else {
+                    ctr++;
+                    if (ctr === keys.length) {
+                      global.distribution.local.store.put(mappedResults,
+                          {key: 'mappedResults', gid: gid}, (e, v) => {
+                            // notify the coordinator
+                            cb(null, null);
+                          });
                     }
-                  }
-                  ctr++;
-                  if (ctr === keys.length) {
-                    global.distribution.local.store.put(mappedResults,
-                        {key: 'mappedResults', gid: gid}, (e, v) => {
-                          // notify the coordinator
-                          cb(null, null);
-                        });
                   }
                 });
           }

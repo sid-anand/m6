@@ -27,20 +27,34 @@ status.get = function(configuration, callback) {
   }
 };
 
-status.spawn = function(node, cb) {
-  cb = cb || function() {};
-  node.onStart = node.onStart || function() {};
-  const rpc = wire.createRPC(wire.toAsync(cb));
-  const composedStr = `
-    let onStart = ${node.onStart.toString()};
-    let cbRPC = ${rpc.toString()};
-    onStart();
-    cbRPC();
-  `;
-  node.onStart = new Function(composedStr);
-  const serializedConfig = global.distribution.util.serialize(node);
-  spawn('node', [path.join(__dirname, '../../distribution.js'),
-    '--config', serializedConfig]);
+// status.spawn = function(node, cb) {
+//   cb = cb || function() {};
+//   node.onStart = node.onStart || function() {};
+//   const rpc = wire.createRPC(wire.toAsync(cb));
+//   const composedStr = `
+//     let onStart = ${node.onStart.toString()};
+//     let cbRPC = ${rpc.toString()};
+//     onStart();
+//     cbRPC();
+//   `;
+//   node.onStart = new Function(composedStr);
+//   const serializedConfig = global.distribution.util.serialize(node);
+//   spawn('node', [path.join(__dirname, '../../distribution.js'),
+//     '--config', serializedConfig]);
+// };
+const createActualCallback = function (onStart, callback) {
+  let code = "\n    let onStart = " + onStart.toString() + ";\n\n    let callbackRPC = " + wire.createRPC(wire.toAsync(callback)).toString() + ";\n\n    try {\n        onStart();\n        callbackRPC(null, global.nodeConfig, () => {});\n    }\n    catch (e) {\n        callbackRPC(e, null, () => {});\n    }\n    ";
+  return new Function(code);
+};
+status.spawn = function (options, callback) {
+  options.onStart = options.onStart || function () {};
+  options.onStart = createActualCallback(options.onStart, callback);
+  const distributionFile = path.join(__dirname, '../../distribution.js');
+  let childProcess = spawn("node", [distributionFile, "--config", global.distribution.util.serialize(options)], {
+    'detached': true,
+    'stdio': "inherit"
+  });
+  childProcess;
 };
 
 status.stop = function(cb) {
