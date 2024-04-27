@@ -13,6 +13,7 @@ const distribution = require('../distribution');
 const id = distribution.util.id;
 
 const groupsTemplate = require('../distribution/all/groups');
+const serialization = require('../distribution/util/serialization');
 const nodeGroup = {};
 
 /*
@@ -86,6 +87,12 @@ const mapDownload = async (key, value) => {
   try {
     const response = await global.axios.get(url);
     out[key] = response.data;
+
+    if (global.distribution.util.serialize(out[key]).includes("Unexpected end of JSON input")) {
+      out[key] = null;
+      console.log('Error serializing the file:', key);
+    }
+
   } catch (error) {
     console.error('Error fetching the file:', error);
     out[key] = null;
@@ -97,6 +104,19 @@ const mapDownload = async (key, value) => {
 // dummy reduce function that does nothing.
 const reduceDownload = (key, values) => {
   let out = {};
+  out[key] = values;
+  return out;
+};
+
+// the only change needed in reduceIndex is to prevent duplicate values. 
+// ngram --> [list of books]
+// we want to prevent duplicate books in the list.
+const reduceIndex = (key, values) => {
+  let out = {};
+
+  // values is an array of strings
+  values = values.filter((v, i, a) => a.indexOf(v) === i);
+
   out[key] = values;
   return out;
 };
@@ -125,6 +145,34 @@ const mapIndex = (key, value) => {
     }
   }
   return out;
+};
+
+const indexingProcess = (keys) => {
+  // Run MR to index each page's contents
+  distribution.group.mr.exec({keys: keys, map: mapIndex, reduce: reduceDownload}, (e, v) => {
+    console.log('Indexed all books');
+    console.log('Indexing Results: ', v);
+
+    // shuffle the ngrams to the correct node. 
+
+    for (let ngram of v) {
+      const ngramKey = Object.keys(ngram)[0];
+      const ngramValue = ngram[ngramKey];
+
+      // Store the ngram in the group store, with the ngram as the key. 
+      // The value is the list of URLs that contain the ngram.
+      distribution.group.store.put(ngramValue, ngramKey, (e, v) => {
+        console.log('Stored ngram:', ngramKey);
+      });
+    }
+
+    // v is inverted index: ngrams --> [list of URLs]
+    // store the inverted index in the store.
+    // in query, it's distributed grep.
+    teardown(() => {
+      console.log('done');
+    });
+  });
 };
 
 doInitialize(() => {
@@ -161,30 +209,31 @@ doInitialize(() => {
           distribution.group.mr.exec({keys: keys, map: mapDownload, reduce: reduceDownload}, (e, v) => {
             console.log('Downloaded all books');
             let downloadCtr = 0;
+            console.log("URL Results: ", Object.keys(v).length);
+
+            const numResults = Object.keys(v).length;
+
             for (let urlResults of v) {
+              
               const urlKey = Object.keys(urlResults)[0];
               const pageContent = urlResults[urlKey][0];
+
+              console.log("URL Key: ", urlKey);
+
 
               // Put all the page contents into the store
               distribution.group.store.put(pageContent, urlKey, (e, v) => {
                 downloadCtr++;
-                if (downloadCtr === lines.length) {
+              
+                console.log("download ctr: ", downloadCtr, "lines length: ", numResults);
+
+                if (downloadCtr === numResults) {
                   console.log('Stored all books');
-
-                  // Run MR to index each page's contents
-                  distribution.group.mr.exec({keys: keys, map: mapIndex, reduce: reduceDownload}, (e, v) => {
-                    console.log('Indexed all books');
-                    console.log('Indexing Results: ', v);
-
-                    // v is inverted index: ngrams --> [list of URLs]
-                    // store the inverted index in the store.
-                    // in query, it's distributed grep.
-                    teardown(() => {
-                      console.log('done');
-                    });
-                  });
+                  console.log("Starting the indexing process")
+                  indexingProcess(keys);
                 }
               });
+              
             }
           });
         });

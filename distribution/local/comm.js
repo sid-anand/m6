@@ -21,7 +21,12 @@ const comm = {
       });
       res.on('end', () => {
         if (cb) {
-          cb(...serialization.deserialize(data));
+          try{
+            cb(...serialization.deserialize(data));
+          }
+          catch(e){
+            cb(...[]);
+          }
         }
       });
       res.on('error', (error) => {
