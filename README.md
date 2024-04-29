@@ -31,7 +31,7 @@ Public ip: '18.207.118.144'
 ....
 
 In each console for each instance, do the following:
-1. cd into m6. It's already cloned and set up.
+1. cd into m6. git pull if necessary.
 2. npm install if necessary
 3. export NODE_TLS_REJECT_UNAUTHORIZED=0
 4. ./distribution.js --ip '0.0.0.0' --port 8080
