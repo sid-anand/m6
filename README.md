@@ -25,9 +25,14 @@ Email: brandonyan5@gmail.com
 Password: AWSAccount6$
 
 Connect to each EC2 instance using the connect button:
+Currently have fully set up 7 EC2 instances:
 Public ip: '54.147.156.183'
 Public ip: '54.221.21.21'
 Public ip: '18.207.118.144' 
+Public ip: '54.164.35.195'
+Public ip: '54.198.96.208'
+Public ip: '54.147.224.143'
+Public ip: '44.223.1.5'
 ....
 
 In each console for each instance, do the following:
@@ -39,3 +44,20 @@ In each console for each instance, do the following:
 5. Leave each tab open and running
 
 Then run test/distributed.crawl.js on your local machine.
+
+
+Brand new setup for a new EC2 instance:
+Sudo apt update
+sudo apt install nodejs git vim
+Git clone the repo
+Cd m6
+sudo apt install npm
+Npm install
+Chmod +x distribution.js
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+./distribution.js --ip '0.0.0.0' --port 8080
+
+
+After first-time setup, only need to do these 2 each time to start the server on each node:
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+./distribution.js --ip '0.0.0.0' --port 8080
