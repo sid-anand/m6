@@ -18,13 +18,16 @@ const serialization = require('../util/serialization');
 const store = {};
 
 store.get = (name, cb) => {
+  // console.log("local store get");
   const nid = id.getNID(global.nodeConfig);
+  console.log(name, nid);
   if (name === null) {
     // better error-checking
     const keys = fs.readdirSync(path.join(__dirname,
         `../../store/${nid}/local`));
     cb(null, keys);
   } else if (typeof name === 'object') {
+    // console.log("with group", name.key);
     if (name.key === null) {
       // better error-checking - also assumes no gid will be 'local'
       if (fs.existsSync(path.join(__dirname,
@@ -36,13 +39,17 @@ store.get = (name, cb) => {
         cb(null, []);
       }
     } else {
+      // console.log("hiii");
       fs.readFile(path.join(__dirname,
           `../../store/${nid}/${name.gid}/${name.key}`),
       'utf8', (err, data) => {
         if (err) {
+          // console.log(err);
           cb(new Error(err), null);
         } else {
+          // console.log("no issue");
           const obj = serialization.deserialize(data);
+          // console.log(obj);
           cb(null, obj);
         }
       });

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const fs = require('fs');
 
 // spin up 3 nodes on localhost
@@ -31,6 +32,7 @@ let localServer = null;
 const n1 = {ip: '127.0.0.1', port: 7110};
 const n2 = {ip: '127.0.0.1', port: 7111};
 const n3 = {ip: '127.0.0.1', port: 7112};
+const n0 = {ip: '127.0.0.1', port: 7109};
 
 
 const doInitialize = (done) => {
@@ -62,20 +64,7 @@ const doInitialize = (done) => {
   });
 };
 
-const teardown = (done) => {
-  let remote = {service: 'status', method: 'stop'};
-  remote.node = n1;
-  distribution.local.comm.send([], remote, (e, v) => {
-    remote.node = n2;
-    distribution.local.comm.send([], remote, (e, v) => {
-      remote.node = n3;
-      distribution.local.comm.send([], remote, (e, v) => {
-        localServer.close();
-        done();
-      });
-    });
-  });
-};
+
 
 const mapDownload = async (key, value) => {
   // key: "https:__atlas?cs?brown?edu_data_gutenberg_0_7_old_7?txt"
@@ -169,9 +158,6 @@ const indexingProcess = (keys) => {
     // v is inverted index: ngrams --> [list of URLs]
     // store the inverted index in the store.
     // in query, it's distributed grep.
-    teardown(() => {
-      console.log('done');
-    });
   });
 };
 
