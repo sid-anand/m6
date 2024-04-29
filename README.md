@@ -18,3 +18,24 @@ TODO:
 
 - Index
 - Query
+
+
+To run using EC2 instances:
+Email: brandonyan5@gmail.com
+Password: AWSAccount6$
+
+Connect to each EC2 instance using the connect button:
+Public ip: '54.147.156.183'
+Public ip: '54.221.21.21'
+Public ip: '18.207.118.144' 
+....
+
+In each console for each instance, do the following:
+1. cd into m6. It's already cloned and set up.
+2. npm install if necessary
+3. export NODE_TLS_REJECT_UNAUTHORIZED=0
+4. ./distribution.js --ip '0.0.0.0' --port 8080
+4. run chmod +x distribution.js if getting permission denied
+5. Leave each tab open and running
+
+Then run test/distributed.crawl.js on your local machine.
