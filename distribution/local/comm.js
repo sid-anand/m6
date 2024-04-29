@@ -11,7 +11,7 @@ const comm = {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Content-Length': serialization.serialize(message).length,
+        'Content-Length': Buffer.byteLength(serialization.serialize(message)),
       },
     };
     const req = http.request(options, (res) => {

@@ -18,16 +18,13 @@ const serialization = require('../util/serialization');
 const store = {};
 
 store.get = (name, cb) => {
-  // console.log("local store get");
   const nid = id.getNID(global.nodeConfig);
-  console.log(name, nid);
   if (name === null) {
     // better error-checking
     const keys = fs.readdirSync(path.join(__dirname,
         `../../store/${nid}/local`));
     cb(null, keys);
   } else if (typeof name === 'object') {
-    // console.log("with group", name.key);
     if (name.key === null) {
       // better error-checking - also assumes no gid will be 'local'
       if (fs.existsSync(path.join(__dirname,
@@ -39,17 +36,13 @@ store.get = (name, cb) => {
         cb(null, []);
       }
     } else {
-      // console.log("hiii");
       fs.readFile(path.join(__dirname,
           `../../store/${nid}/${name.gid}/${name.key}`),
       'utf8', (err, data) => {
         if (err) {
-          // console.log(err);
           cb(new Error(err), null);
         } else {
-          // console.log("no issue");
           const obj = serialization.deserialize(data);
-          // console.log(obj);
           cb(null, obj);
         }
       });
@@ -77,7 +70,7 @@ store.put = (obj, name, cb) => {
     if (name.key === null) {
       name.key = id.getID(obj);
     }
-    name.key = name.key.replace(/[^a-zA-Z0-9,:_.?]/g, '');
+    name.key = name.key.replace(/[^a-zA-Z0-9,:_.?-]/g, '');
     if (!fs.existsSync(path.join(__dirname, `../../store/${nid}`))) {
       fs.mkdirSync(path.join(__dirname, `../../store/${nid}`));
     }
@@ -95,7 +88,7 @@ store.put = (obj, name, cb) => {
       }
     });
   } else {
-    name = name.replace(/[^a-zA-Z0-9,:_.?]/g, '');
+    name = name.replace(/[^a-zA-Z0-9,:_.?-]/g, '');
     if (!fs.existsSync(path.join(__dirname, `../../store/${nid}`))) {
       fs.mkdirSync(path.join(__dirname, `../../store/${nid}`));
     }
@@ -122,7 +115,7 @@ store.append = (obj, name, cb) => {
     if (name.key === null) {
       name.key = id.getID(obj);
     }
-    name.key = name.key.replace(/[^a-zA-Z0-9,:_.?]/g, '');
+    name.key = name.key.replace(/[^a-zA-Z0-9,:_.?-]/g, '');
     if (!fs.existsSync(path.join(__dirname, `../../store/${nid}`))) {
       fs.mkdirSync(path.join(__dirname, `../../store/${nid}`));
     }
@@ -149,7 +142,7 @@ store.append = (obj, name, cb) => {
         `../../store/${nid}/${name.gid}/${name.key}`), serializedDataObj);
     cb(null, obj);
   } else {
-    name = name.replace(/[^a-zA-Z0-9,:_.?]/g, '');
+    name = name.replace(/[^a-zA-Z0-9,:_.?-]/g, '');
     if (!fs.existsSync(path.join(__dirname, `../../store/${nid}`))) {
       fs.mkdirSync(path.join(__dirname, `../../store/${nid}`));
     }
