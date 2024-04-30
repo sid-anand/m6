@@ -145,10 +145,9 @@ const mapIndex = (key, value) => {
   value = value.toLowerCase();
   value = value.replace(/[^a-zA-Z0-9]/g, ' ');
   value = value.replace(/\s{2,}/g, ' ');
-  let words = value.split(/(\s+)/).filter((e) => e !== ' ' && e !== '');
-
-  // TEMPORARY - ONLY TAKE THE FIRST 100 WORDS
-  words = words.slice(0, 100);
+  let words = value.split(/(\s+)/)
+    .filter((w) => w !== ' ' && w !== '')
+    .filter((w) => isNaN(w));
 
   let MAX_NGRAM = 2;
   let out = [];

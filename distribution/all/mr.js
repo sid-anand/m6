@@ -60,28 +60,15 @@ const mr = function(config) {
           // get and delete `mappedResults` file
           global.distribution.local.store.del({key: 'mappedResults', gid: gid},
               (e, mappedResults) => {
-                let ctr = 0;
-                for (const key of Object.keys(mappedResults)) {
-                  let obj = {};
-                  obj[key] = mappedResults[key];
-                  // optionally perform the compaction optimization
-                  if (compactor) {
-                    obj = compactor(key, obj[key]);
-                    obj[key] = [obj[key]];
-                  }
-                  global.distribution[gid].store.append(obj, 'shuffledResults',
-                      (e, v) => {
-                        ctr++;
-                        if (ctr === Object.keys(mappedResults).length) {
-                          // notify the coordinator
-                          cb(null, null);
-                        }
-                      });
-                }
                 if (Object.keys(mappedResults).length === 0) {
                   // notify the coordinator
                   cb(null, null);
                 }
+                global.distribution[gid].store.append(mappedResults, 'shuffledResults',
+                    (e, v) => {
+                      // notify the coordinator
+                      cb(null, null);
+                    });
               });
         },
         reduce: (reducer, gid, cb) => {

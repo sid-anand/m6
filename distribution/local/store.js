@@ -133,10 +133,12 @@ store.append = (obj, name, cb) => {
     const data = fs.readFileSync(path.join(__dirname,
         `../../store/${nid}/${name.gid}/${name.key}`), 'utf8');
     const dataObj = serialization.deserialize(data);
-    if (!dataObj[Object.keys(obj)[0]]) {
-      dataObj[Object.keys(obj)[0]] = [];
+    for (const key of Object.keys(obj)) {
+      if (!dataObj[key]) {
+        dataObj[key] = [];
+      }
+      dataObj[key].push(...obj[key]);
     }
-    dataObj[Object.keys(obj)[0]].push(...Object.values(obj)[0]);
     const serializedDataObj = serialization.serialize(dataObj);
     fs.writeFileSync(path.join(__dirname,
         `../../store/${nid}/${name.gid}/${name.key}`), serializedDataObj);
@@ -158,10 +160,12 @@ store.append = (obj, name, cb) => {
     const data = fs.readFileSync(path.join(__dirname,
         `../../store/${nid}/local/${name}`), 'utf8');
     const dataObj = serialization.deserialize(data);
-    if (!dataObj[Object.keys(obj)[0]]) {
-      dataObj[Object.keys(obj)[0]] = [];
+    for (const key of Object.keys(obj)) {
+      if (!dataObj[key]) {
+        dataObj[key] = [];
+      }
+      dataObj[key].push(...obj[key]);
     }
-    dataObj[Object.keys(obj)[0]].push(...Object.values(obj)[0]);
     const serializedDataObj = serialization.serialize(dataObj);
     fs.writeFileSync(path.join(__dirname,
         `../../store/${nid}/local/${name}`), serializedDataObj);

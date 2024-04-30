@@ -55,9 +55,29 @@ const store = (config) => {
         if (name === null) {
           name = id.getID(obj);
         }
-        const [, node] = selectNode(name, Object.values(v), context.hash);
-        local.comm.send([obj, {gid: context.gid, key: name}],
-            {node, service: 'store', method: 'append'}, cb);
+        const nidToNode = {};
+        const nidToObj = {};
+        for (const key of Object.keys(obj)) {
+          const [nid, node] = selectNode(key, Object.values(v), context.hash);
+          nidToNode[nid] = node;
+          if (!nidToObj[nid]) {
+            nidToObj[nid] = {};
+          }
+          nidToObj[nid][key] = obj[key];
+        }
+        // send to all nodes in nidToObj
+        const numNids = Object.keys(nidToObj).length;
+        let ctr = 0;
+        for (const nid of Object.keys(nidToObj)) {
+          const node = nidToNode[nid];
+          local.comm.send([nidToObj[nid], {gid: context.gid, key: name}],
+            {node, service: 'store', method: 'append'}, (e, v) => {
+              ctr++;
+              if (ctr === numNids) {
+                cb(null, obj);
+              }
+            });
+        }
       });
     },
     del: (name, cb) => {
