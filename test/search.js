@@ -140,25 +140,32 @@ const reduceIndex = (key, values) => {
 
 const mapIndex = (key, value) => {
   // key: "https:__atlas?cs?brown?edu_data_gutenberg_0_7_old_7?txt"
-  // value: text content for a book. 
+  // value: text content for a book.
 
   value = value.toLowerCase();
-  value = value.replace(/[^a-zA-Z0-9]/g, ' ');
-  value = value.replace(/\s{2,}/g, ' ');
-  let words = value.split(/(\s+)/)
+  value = value.replace(/(?!\r\n)[^a-z0-9\n]/g, ' ');
+  const lines = value.split(/\r?\n\r?\n/g);
+  const words = lines.map((line) => 
+    line.replace(/\s{2,}/g, ' ')
+    .split(/(\s+)/)
     .filter((w) => w !== ' ' && w !== '')
-    .filter((w) => isNaN(w));
+    .filter((w) => isNaN(w)))
+    .filter((line) => line.length > 0);
 
   let MAX_NGRAM = 2;
   let out = [];
   for (let ngram = 1; ngram <= MAX_NGRAM; ngram++) {
-    for (let i = 0; i < words.length - ngram; i++) {
-      let ngramKey = words.slice(i, i + ngram);
-      let o = {};
-      // join ngram on '_' so it can be a filename
-      let strNGram = ngramKey.join('_');
-      o[strNGram] = key;
-      out.push(o);
+    for (let parNum = 0; parNum < words.length; parNum++) {
+      const line = words[parNum];
+      for (let i = 0; i < line.length - ngram; i++) {
+        let ngramKey = line.slice(i, i + ngram);
+        let o = {};
+        // join ngram on '_' so it can be a filename
+        let strNGram = ngramKey.join('_');
+        // use % to separate URL and paragraph number
+        o[strNGram] = `${key}%${parNum}`;
+        out.push(o);
+      }
     }
   }
   return out;
@@ -168,7 +175,7 @@ const mapIndex = (key, value) => {
 
 // If we have a UI, we can link this somehow
 const handleQuery = (query) => {
-  let maxNgrams = 3; // TODO: decide on whats the max ngram
+  let maxNgrams = 2; // TODO: decide on whats the max ngram
   // TODO: for a given query generate ngrams and query all ngrams and find a
   // way to compose results ideally
   let words = query.split(' ');
@@ -182,7 +189,7 @@ const handleQuery = (query) => {
     // v would be the indices in the KV store idea. v[0] is best match? order?
     const results = v[query];
     if (results) {
-      console.log('Results:', results.map(decodeURL));
+      console.log('Results:', results.map(decodeURL).map((r) => r.split('%')));
     } else {
       console.log('Results:', results);
     }
