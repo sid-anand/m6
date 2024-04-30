@@ -177,13 +177,14 @@ const handleQuery = (query) => {
   }
   query = words.join('_');
 
-  distribution.group.store.get(query, (e, v) => {
+  distribution.group.store.getNew(query, 'ngrams', (e, v) => {
     // the whole query can be an ngram
     // v would be the indices in the KV store idea. v[0] is best match? order?
-    if (v) {
-      console.log('Results:', v.map(decodeURL));
+    const results = v[query];
+    if (results) {
+      console.log('Results:', results.map(decodeURL));
     } else {
-      console.log('Results:', v);
+      console.log('Results:', results);
     }
     
     querier();
@@ -207,29 +208,38 @@ const querier = () => {
 
 const indexer = (keys) => {
   // Run MR to index each page's contents
-  // This uses reduceDownload for now!!!
-  distribution.group.mr.exec({keys: keys, map: mapIndex, reduce: reduceDownload}, (e, v) => {
+  distribution.group.mr.exec({keys: keys, map: mapIndex, reduce: reduceIndex}, (e, v) => {
     console.log('Indexed books');
 
-    // shuffle the ngrams to the correct node. 
-    const numNgrams = Object.keys(v).length;
-    let loadCtr = 0;
-
-    for (let ngram of v) {
+    const obj = {};
+    for (const ngram of v) {
       const ngramKey = Object.keys(ngram)[0];
-      const ngramValue = ngram[ngramKey];
-
-      // Store the ngram in the group store, with the ngram as the key. 
-      // The value is the list of URLs that contain the ngram.
-      distribution.group.store.put(ngramValue, ngramKey, (e, v) => {
-        loadCtr++;
-
-        if (loadCtr === numNgrams) {
-          console.log('Loaded ngrams into store');
-          querier();
-        }
-      });
+      obj[ngramKey] = ngram[ngramKey];
     }
+    distribution.group.store.append(obj, 'ngrams', (e, v) => {
+      console.log('Loaded ngrams into store');
+      querier();
+    });
+
+    // shuffle the ngrams to the correct node. 
+    // const numNgrams = Object.keys(v).length;
+    // let loadCtr = 0;
+
+    // for (let ngram of v) {
+    //   const ngramKey = Object.keys(ngram)[0];
+    //   const ngramValue = ngram[ngramKey];
+
+    //   // Store the ngram in the group store, with the ngram as the key. 
+    //   // The value is the list of URLs that contain the ngram.
+    //   distribution.group.store.put(ngramValue, ngramKey, (e, v) => {
+    //     loadCtr++;
+
+    //     if (loadCtr === numNgrams) {
+    //       console.log('Loaded ngrams into store');
+    //       querier();
+    //     }
+    //   });
+    // }
   });
 };
 

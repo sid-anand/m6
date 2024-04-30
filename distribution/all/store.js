@@ -17,7 +17,6 @@ const store = (config) => {
   return {
     get: (name, cb) => {
       cb = cb || function() {};
-      // console.log("entering store get", name);
       local.groups.get(context.gid, (e, v) => {
         // if name is null, aggregate keys from all nodes
         if (name === null) {
@@ -30,7 +29,6 @@ const store = (config) => {
               });
         } else {
           const [, node] = selectNode(name, Object.values(v), context.hash);
-          // console.log("node chosen", node);
           local.comm.send([{gid: context.gid, key: name}],
               {node, service: 'store', method: 'get'}, cb);
         }
@@ -78,6 +76,14 @@ const store = (config) => {
               }
             });
         }
+      });
+    },
+    getNew: (key, filename, cb) => {
+      cb = cb || function() {};
+      local.groups.get(context.gid, (e, v) => {
+        const [, node] = selectNode(key, Object.values(v), context.hash);
+        local.comm.send([{gid: context.gid, key: filename}],
+            {node, service: 'store', method: 'get'}, cb);
       });
     },
     del: (name, cb) => {
