@@ -106,7 +106,7 @@ const mapDownload = async (key, value) => {
     const response = await global.axios.get(url);
     out[key] = response.data;
 
-    if (global.distribution.util.serialize(out[key]).includes("Unexpected end of JSON input")) {
+    if (global.distribution.util.serialize(out[key]).includes('Unexpected end of JSON input')) {
       out[key] = null;
       console.log('Error serializing the file:', key);
     }
@@ -125,7 +125,7 @@ const reduceDownload = (key, values) => {
   return out;
 };
 
-// the only change needed in reduceIndex is to prevent duplicate values. 
+// the only change needed in reduceIndex is to prevent duplicate values.
 // ngram --> [list of books]
 // we want to prevent duplicate books in the list.
 const reduceIndex = (key, values) => {
@@ -145,12 +145,12 @@ const mapIndex = (key, value) => {
   value = value.toLowerCase();
   value = value.replace(/(?!\r\n)[^a-z0-9\n]/g, ' ');
   const lines = value.split(/\r?\n\r?\n/g);
-  const words = lines.map((line) => 
+  const words = lines.map((line) =>
     line.replace(/\s{2,}/g, ' ')
-    .split(/(\s+)/)
-    .filter((w) => w !== ' ' && w !== '')
-    .filter((w) => isNaN(w)))
-    .filter((line) => line.length > 0);
+        .split(/(\s+)/)
+        .filter((w) => w !== ' ' && w !== '')
+        .filter((w) => isNaN(w)))
+      .filter((line) => line.length > 0);
 
   let MAX_NGRAM = 2;
   let out = [];
@@ -174,30 +174,35 @@ const mapIndex = (key, value) => {
 /* Querying */
 
 // If we have a UI, we can link this somehow
-const handleQuery = (query) => {
-  let maxNgrams = 2; // TODO: decide on whats the max ngram
-  // TODO: for a given query generate ngrams and query all ngrams and find a
-  // way to compose results ideally
+const handleQuery = async (query) => {
+  let maxNgrams = 2;
   let words = query.split(' ');
-  if (words.length >= maxNgrams) {
-    words = words.slice(0, maxNgrams);
-  }
-  query = words.join('_');
-
-  distribution.group.store.getNew(query, 'ngrams', (e, v) => {
-    // the whole query can be an ngram
-    // v would be the indices in the KV store idea. v[0] is best match? order?
-    const results = v[query];
-    if (results) {
-      console.log('Results:', results.map(decodeURL).map((r) => r.split('%')));
-    } else {
-      console.log('Results:', results);
+  for (let n = maxNgrams; n > 0; n--) {
+    for (let index = 0; index + n <= words.length; index++) {
+      let queryNgram = words.slice(index, index + n).join('_');
+      let res = await getNewAsync(queryNgram);
+      if (res) {
+        console.log('Result: ', res.map(decodeURL).map((r) => r.split('%')));
+        querier();
+        return;
+      }
     }
-    
-    querier();
+  }
+  console.log("No results found!");
+  querier();
+};
+const getNewAsync = (query) => {
+  return new Promise((resolve, reject) => {
+    distribution.group.store.getNew(query, 'ngrams', (error, value) => {
+      if (error) {
+        reject(error);
+      } else {
+        const results = value[query];
+        resolve(results);
+      }
+    });
   });
 };
-
 const querier = () => {
   rl.question('Enter your query (or \'exit\'): ', (query) => {
     if (query.startsWith('exit')) {
@@ -228,7 +233,7 @@ const indexer = (keys) => {
       querier();
     });
 
-    // shuffle the ngrams to the correct node. 
+    // shuffle the ngrams to the correct node.
     // const numNgrams = Object.keys(v).length;
     // let loadCtr = 0;
 
@@ -236,7 +241,7 @@ const indexer = (keys) => {
     //   const ngramKey = Object.keys(ngram)[0];
     //   const ngramValue = ngram[ngramKey];
 
-    //   // Store the ngram in the group store, with the ngram as the key. 
+    //   // Store the ngram in the group store, with the ngram as the key.
     //   // The value is the list of URLs that contain the ngram.
     //   distribution.group.store.put(ngramValue, ngramKey, (e, v) => {
     //     loadCtr++;
@@ -268,7 +273,7 @@ const downloader = () => {
         // Put all the page contents into the store
         distribution.group.store.put(pageContent, urlKey, (e, v) => {
           loadCtr++;
-        
+
           if (loadCtr === numResults) {
             console.log('Loaded books into store');
             indexer(keys);
