@@ -39,26 +39,33 @@ Connect to each EC2 instance using the connect button. Currently have fully set 
 In each console for each instance, do the following:
 1. cd into m6. git pull if necessary.
 2. npm install if necessary
-3. export NODE_TLS_REJECT_UNAUTHORIZED=0
-4. ./distribution.js --ip '0.0.0.0' --port 8080
-4. run chmod +x distribution.js if getting permission denied
+3. ``` export NODE_TLS_REJECT_UNAUTHORIZED=0```
+4. ```./distribution.js --ip '0.0.0.0' --port 8080```
+4. run ```chmod +x distribution.js``` if getting permission denied
 5. Leave each tab open and running
 
-Then run test/distributed.crawl.js on your local machine.
+Then run test/search.js on your local machine.
 
 
 Brand new setup for a new EC2 instance:
 1. Sudo apt update
 2. sudo apt install nodejs git vim
 3. Git clone the repo
-4. Cd m6
-5. sudo apt install npm
-6. Npm install
-7. Chmod +x distribution.js
-8. export NODE_TLS_REJECT_UNAUTHORIZED=0
-9. ./distribution.js --ip '0.0.0.0' --port 8080
+4. ```cd m6```
+5. ```sudo apt install npm```
+6. ```npm install```
+7. ```chmod +x distribution.js```
+8. ```export NODE_TLS_REJECT_UNAUTHORIZED=0```
+9. ```./distribution.js --ip '0.0.0.0' --port 8080```
 
 
 After first-time setup, only need to do these 2 each time to start the server on each node:
-1. export NODE_TLS_REJECT_UNAUTHORIZED=0
-2. ./distribution.js --ip '0.0.0.0' --port 8080
+1. ```export NODE_TLS_REJECT_UNAUTHORIZED=0```
+2. ```./distribution.js --ip '0.0.0.0' --port 8080```
+
+To run the search process again, run these 3 commands for complete teardown
+```
+sudo lsof -i :7110-7112 | awk 'NR>1 {print $2}' | xargs -r sudo kill -9
+rm -rf ../store/*
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+```
