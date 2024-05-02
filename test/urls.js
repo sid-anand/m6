@@ -184,9 +184,11 @@ const gatherLinks = () => {
               const currentKey = resultingKeys[i];
               const currentUrls = currentObj[currentKey];
               for(var j = 0; j < currentUrls.length; j++){
-                fs.appendFile('links.txt', currentUrls[j] + '\n', (err) => {
+                if (currentUrls[j] !== undefined && currentUrls[j] !== null) {
+                  fs.appendFile('links.txt', currentUrls[j] + '\n', (err) => {
                     console.error(err);
-                });
+                  });
+                }
               }
             }
           }

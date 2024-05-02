@@ -9,7 +9,7 @@ const fs = require('fs');
 // to delete the entirety of store
 // sudo rm -rf ../store/*
 
-global.nodeConfig = {ip: '127.0.0.1', port: 7070};
+global.nodeConfig = {ip: '127.0.0.1', port: 8080};
 const distribution = require('../distribution');
 const id = distribution.util.id;
 
@@ -27,9 +27,9 @@ const rl = readline.createInterface({
   The local node will be the orchestrator.
 */
 let localServer = null;
-const n1 = {ip: '127.0.0.1', port: 7110};
-const n2 = {ip: '127.0.0.1', port: 7111};
-const n3 = {ip: '127.0.0.1', port: 7112};
+const n1 = {ip: '<placeholder ip>', port: 8080};
+const n2 = {ip: '<placeholder ip>', port: 8080};
+const n3 = {ip: '<placeholder ip>', port: 8080};
 
 const doInitialize = (done) => {
   nodeGroup[id.getSID(n1)] = n1;
@@ -37,13 +37,7 @@ const doInitialize = (done) => {
   nodeGroup[id.getSID(n3)] = n3;
 
   const startNodes = (cb) => {
-    distribution.local.status.spawn(n1, (e, v) => {
-      distribution.local.status.spawn(n2, (e, v) => {
-        distribution.local.status.spawn(n3, (e, v) => {
-          cb();
-        });
-      });
-    });
+    cb();
   };
 
   distribution.node.start((server) => {
@@ -59,18 +53,8 @@ const doInitialize = (done) => {
 };
 
 const teardown = (done) => {
-  let remote = {service: 'status', method: 'stop'};
-  remote.node = n1;
-  distribution.local.comm.send([], remote, (e, v) => {
-    remote.node = n2;
-    distribution.local.comm.send([], remote, (e, v) => {
-      remote.node = n3;
-      distribution.local.comm.send([], remote, (e, v) => {
-        localServer.close();
-        done();
-      });
-    });
-  });
+  localServer.close();
+  done();
 };
 
 /* Utility functions */
@@ -294,12 +278,12 @@ const downloader = () => {
 };
 
 doInitialize(() => {
-  // Read links from links.txt (not less-links.txt)
+  // Read links from less-links.txt (not links.txt)
   // Store the dataset onto the cluster
   // Run mr.exec with all the keys to do the distributed downloading
   // Store the txt content of each book onto the cluster
 
-  const linksPath = 'links.txt';
+  const linksPath = 'less-links.txt';
   const data = fs.readFileSync(linksPath, 'utf8');
 
   // Split the file content by newlines, accounting for Windows carriage returns
