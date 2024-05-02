@@ -182,15 +182,23 @@ const handleQuery = async (query) => {
       let queryNgram = words.slice(index, index + n).join('_');
       let res = await getNewAsync(queryNgram);
       if (res) {
-        console.log('Result: ', res.map(decodeURL).map((r) => r.split('%')));
+        let unformatted = res.map(decodeURL).map((r) => r.split('%'));
+        let ind = 0;
+        console.log('Results:');
+        while (ind < 5 && ind < unformatted.length) {
+          console.log(`${ind + 1}. ${unformatted[ind][0]} | Paragraph Number: ${unformatted[ind][1]}`);
+          ind++;
+        }
+        // console.log('Result: ', res.map(decodeURL).map((r) => r.split('%')));
         querier();
         return;
       }
     }
   }
-  console.log("No results found!");
+  console.log('No results found!');
   querier();
 };
+
 const getNewAsync = (query) => {
   return new Promise((resolve, reject) => {
     distribution.group.store.getNew(query, 'ngrams', (error, value) => {
@@ -203,6 +211,7 @@ const getNewAsync = (query) => {
     });
   });
 };
+
 const querier = () => {
   rl.question('Enter your query (or \'exit\'): ', (query) => {
     if (query.startsWith('exit')) {
